@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Data;
 using dotnetbackend.Dtos.Car;
+using dotnetbackend.Helpers;
 using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
 using dotnetbackend.Services;
@@ -27,13 +28,13 @@ namespace dotnetbackend.Controllers
 
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] CQueryObject queryObject)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
-      var cars = await _carService.GetAllCarsAsync();
+      var cars = await _carService.GetAllCarsAsync(queryObject);
       if (cars == null || !cars.Any())
       {
         return NotFound("No cars found");

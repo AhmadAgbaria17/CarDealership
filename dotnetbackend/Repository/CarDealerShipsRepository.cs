@@ -52,6 +52,24 @@ namespace dotnetbackend.Repository
       {
         CarDealerShip = CarDealerShip.Where(c => c.City.Contains(queryObject.City));
       }
+
+      if (!string.IsNullOrWhiteSpace(queryObject.SortBy))
+      {
+        if (queryObject.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+        {
+          CarDealerShip = queryObject.IsDescending
+            ? CarDealerShip.OrderByDescending(c => c.Name)
+            : CarDealerShip.OrderBy(c => c.Name);
+        }
+      }
+
+      if (queryObject.PageNumber > 0 && queryObject.PageSize > 0)
+      {
+        CarDealerShip = CarDealerShip
+          .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
+          .Take(queryObject.PageSize);
+      }
+
       return await CarDealerShip.ToListAsync();
     }
 

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Dtos.Car;
+using dotnetbackend.Helpers;
 using dotnetbackend.models;
 
 namespace dotnetbackend.IServices
 {
   public interface ICarService
   {
-    Task<List<CarDto>> GetAllCarsAsync();
+    Task<List<CarDto>> GetAllCarsAsync(CQueryObject queryObject);
     Task<CarDto?> GetCarByIdAsync(int id);
     Task<CarDto?> AddCarAsync(int CarDealerShipId ,CreateCarRequest carDto);
     Task<CarDto?> UpdateCarAsync(int id , UpdateCarRequest carDto);

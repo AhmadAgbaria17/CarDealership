@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Data;
 using dotnetbackend.Dtos.Car;
+using dotnetbackend.Helpers;
 using dotnetbackend.IRepository;
 using dotnetbackend.models;
 using Microsoft.EntityFrameworkCore;
@@ -37,9 +38,26 @@ namespace dotnetbackend.Repository
       return true;  
     }
 
-    public async Task<List<Car>> GetAllCarsAsync()
+    public async Task<List<Car>> GetAllCarsAsync(CQueryObject queryObject)
     {
-      return await _context.Car.ToListAsync();
+      var carsQuery = _context.Car.Include(c => c.CarDealerShip).AsQueryable();
+      if (!string.IsNullOrEmpty(queryObject.Company))
+      {
+        carsQuery = carsQuery.Where(c => c.Company.Contains(queryObject.Company));
+      }
+      if (!string.IsNullOrEmpty(queryObject.ModelName))
+      {
+        carsQuery = carsQuery.Where(c => c.ModelName.Contains(queryObject.ModelName));
+      }
+
+        if (queryObject.PageNumber > 0 && queryObject.PageSize > 0)
+      {
+        carsQuery = carsQuery
+          .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
+          .Take(queryObject.PageSize);
+      }
+
+      return await carsQuery.ToListAsync();
     }
 
     public async Task<Car> GetCarByIdAsync(int id)

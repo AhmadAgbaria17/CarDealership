@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\dotnetbackend\\dotnetbackend.csproj": {}
+    "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\CarDealership\\dotnetbackend\\dotnetbackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\dotnetbackend\\dotnetbackend.csproj": {
+    "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\CarDealership\\dotnetbackend\\dotnetbackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\dotnetbackend\\dotnetbackend.csproj",
+        "projectUniqueName": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\CarDealership\\dotnetbackend\\dotnetbackend.csproj",
         "projectName": "dotnetbackend",
-        "projectPath": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\dotnetbackend\\dotnetbackend.csproj",
+        "projectPath": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\CarDealership\\dotnetbackend\\dotnetbackend.csproj",
         "packagesPath": "C:\\Users\\Ahmed\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\dotnetbackend\\obj\\",
+        "outputPath": "C:\\Users\\Ahmed\\Desktop\\ahmad17\\projects\\CarDealership\\dotnetbackend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ahmed\\AppData\\Roaming\\NuGet\\NuGet.Config",

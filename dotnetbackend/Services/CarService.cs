@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Dtos.Car;
+using dotnetbackend.Helpers;
 using dotnetbackend.IRepository;
 using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
@@ -33,9 +34,9 @@ namespace dotnetbackend.Services
       return await _carRepository.DeleteCarAsync(id);
     }
 
-    public async Task<List<CarDto>> GetAllCarsAsync()
+    public async Task<List<CarDto>> GetAllCarsAsync(CQueryObject queryObject)
     {
-      var cars = (await _carRepository.GetAllCarsAsync())
+      var cars = (await _carRepository.GetAllCarsAsync(queryObject))
         .Select(car => car.ToCarDto())
         .ToList();
       return cars;
