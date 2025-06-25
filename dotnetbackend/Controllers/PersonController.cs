@@ -1,118 +1,75 @@
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using dotnetbackend.Dtos.Person;
-using dotnetbackend.IRepository;
 using dotnetbackend.IServices;
+using dotnetbackend.models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace dotnetbackend.Controllers
-{
-
-  [Route("api/person")]
+{   [Route("api/person")]
   [ApiController]
   public class PersonController : ControllerBase
   {
-    private readonly IPersonService _personService;
-
-    public PersonController( IPersonService personService)
+    private readonly UserManager<Person> _userManager;
+    private readonly ITokenService _tokenService;
+    public PersonController(UserManager<Person> userManager, ITokenService tokenService)
     {
-      _personService = personService;
+      _userManager = userManager;
+      _tokenService = tokenService;
     }
 
-
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-      if (!ModelState.IsValid)
+      try
       {
-        return BadRequest(ModelState);
-      }
-      var persons = await _personService.GetAllAsync();
-      if (persons == null || persons.Count == 0)
-      {
-        return NotFound("No persons found");
-      }
-      return Ok(persons);
-    }
-
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-      var person = await _personService.GetByIdAsync(id);
-      if (person is null)
-      {
-        return NotFound(new{
-          Message = $"Person with id {id} not found"
-        });
-      }
-      return Ok(person);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreatePersonRequest personDto)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-      if (personDto == null)
-      {
-        return BadRequest("Person data is required");
-      }
-      var person = await _personService.CreateAsync(personDto);
-  
-      return CreatedAtAction(nameof(GetById), new { id = person.Id }, person);
-    }
-
-
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePersonRequest personDto)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-      if (personDto is null)
-      {
-        return BadRequest(new
+        if (registerDto == null || !ModelState.IsValid)
         {
-          Message = "Person data is required"
-        });
-      }
-      var updatedPerson = await _personService.UpdateAsync(id, personDto);
+          return BadRequest("Invalid registration data.");
+        }
 
-      if (updatedPerson is null)
-      {
-        return NotFound(new
+        var person = new Person
         {
-          Message = $"Person with id {id} not found"
-        });
+          UserName = registerDto.UserName,
+          Email = registerDto.Email
+        };
+
+        var createdUser = await _userManager.CreateAsync(person, registerDto.Password);
+
+        if (createdUser.Succeeded)
+        {
+          var roleResult = await _userManager.AddToRoleAsync(person, "User");
+          if (roleResult.Succeeded)
+          {
+            return Ok(
+              new NewPersonDto
+              {
+                UserName = person.UserName,
+                Email = person.Email,
+                Token = _tokenService.CreateToken(person)
+              });
+          }
+          else
+          {
+            return BadRequest($"Failed to assign role: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+          }
+        }
+        else
+        {
+          return BadRequest($"User creation failed: {string.Join(", ", createdUser.Errors.Select(e => e.Description))}");
+        }
       }
-      return Ok(updatedPerson);
+      catch (Exception ex)
+      {
+        return StatusCode(500, $"Internal server error: {ex.Message}");
+      }
+    
     }
 
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete([FromRoute] int id)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-      var wasDeleted = await _personService.DeleteAsync(id);
-      if (!wasDeleted)
-      {
-        return NotFound(new
-        {
-          Message = $"Person with id {id} not found"
-        });
-      }
-      return NoContent();
+        
     }
-  }
 }

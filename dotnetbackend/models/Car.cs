@@ -23,11 +23,8 @@ namespace dotnetbackend.models
         public string HorsePower { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
 
-        public int? CarDealerShipId { get; set; } //Navigation property
+        public int? CarDealerShipId { get; set; } 
         public CarDealerShips? CarDealerShip { get; set; }
-
-        public int? PersonId { get; set; } //Navigation propety 
-        public Person? Person { get; set; }
 
 
     }
