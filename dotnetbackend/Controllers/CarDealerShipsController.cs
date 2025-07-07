@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using dotnetbackend.Dtos.CarDealerShip;
 using dotnetbackend.Helpers;
 using dotnetbackend.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetbackend.Controllers
@@ -20,7 +21,7 @@ namespace dotnetbackend.Controllers
     {
       _carDealerShipService = carDealerShipService;
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] CDHQueryObject queryObject)
     {

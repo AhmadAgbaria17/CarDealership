@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace dotnetbackend.Migrations
 {
     /// <inheritdoc />
-    public partial class ReIdentity : Migration
+    public partial class PersonCarManyToMany : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,7 +176,7 @@ namespace dotnetbackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Car",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -196,12 +198,46 @@ namespace dotnetbackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Car", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Car_CarDealerShips_CarDealerShipId",
+                        name: "FK_Cars_CarDealerShips_CarDealerShipId",
                         column: x => x.CarDealerShipId,
                         principalTable: "CarDealerShips",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LikedCars",
+                columns: table => new
+                {
+                    PersonId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LikedCars", x => new { x.PersonId, x.CarId });
+                    table.ForeignKey(
+                        name: "FK_LikedCars_AspNetUsers_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LikedCars_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "a1b2c3d4-e5f6-7890-abcd-1234567890ab", null, "Admin", "ADMIN" },
+                    { "b2c3d4e5-f678-9012-abcd-2345678901bc", null, "User", "USER" },
+                    { "c3d4e5f6-7890-1234-abcd-3456789012cd", null, "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -244,9 +280,14 @@ namespace dotnetbackend.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarDealerShipId",
-                table: "Car",
+                name: "IX_Cars_CarDealerShipId",
+                table: "Cars",
                 column: "CarDealerShipId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LikedCars_CarId",
+                table: "LikedCars",
+                column: "CarId");
         }
 
         /// <inheritdoc />
@@ -268,13 +309,16 @@ namespace dotnetbackend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Car");
+                name: "LikedCars");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "CarDealerShips");

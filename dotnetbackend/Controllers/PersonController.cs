@@ -45,6 +45,7 @@ namespace dotnetbackend.Controllers
         if (createdUser.Succeeded)
         {
           var roleResult = await _userManager.AddToRoleAsync(person, "User");
+          
           if (roleResult.Succeeded)
           {
             return Ok(

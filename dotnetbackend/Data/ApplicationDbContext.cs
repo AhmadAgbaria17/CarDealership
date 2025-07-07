@@ -21,9 +21,25 @@ namespace dotnetbackend.Data
 
     public DbSet<CarDealerShips> CarDealerShips { get; set; }
 
+    public DbSet<LikedCar> LikedCars { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<LikedCar>(x => x.HasKey(
+        p => new { p.PersonId, p.CarId }
+      ));
+
+      modelBuilder.Entity<LikedCar>()
+        .HasOne(p => p.Person)
+        .WithMany(p => p.LikedCar)
+        .HasForeignKey(p => p.PersonId);    
+
+      modelBuilder.Entity<LikedCar>()
+        .HasOne(p => p.Car)
+        .WithMany(c => c.LikedCars)
+        .HasForeignKey(p => p.CarId);    
 
       List<IdentityRole> roles = new List<IdentityRole>
       {
@@ -33,6 +49,12 @@ namespace dotnetbackend.Data
             Name = "Admin",
             NormalizedName = "ADMIN"
         },
+         new IdentityRole
+      {
+          Id = "c3d4e5f6-7890-1234-abcd-3456789012cd",
+          Name = "Customer",
+          NormalizedName = "CUSTOMER"
+      },
         new IdentityRole
         {
             Id = "b2c3d4e5-f678-9012-abcd-2345678901bc",
@@ -40,7 +62,7 @@ namespace dotnetbackend.Data
             NormalizedName = "USER"
         }
       };
-      
+
       modelBuilder.Entity<IdentityRole>().HasData(roles);
 
 

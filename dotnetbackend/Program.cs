@@ -108,6 +108,9 @@ builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<ILikedCarRepository, LikedCarRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

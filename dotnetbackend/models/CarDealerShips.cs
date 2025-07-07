@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 
 namespace dotnetbackend.models
 {
+  [Table("CarDealerShips")]
   public class CarDealerShips
   {
     public int Id { get; set; }
@@ -15,6 +17,7 @@ namespace dotnetbackend.models
     public int[] Coordinates { get; set; } = new int[2];
     public String Phone { get; set; } = string.Empty;
     public List<Car> Cars { get; set; } = new List<Car>();
+
 
   }
 }

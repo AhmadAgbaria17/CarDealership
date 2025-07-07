@@ -57,6 +57,12 @@ namespace dotnetbackend.Migrations
                         },
                         new
                         {
+                            Id = "c3d4e5f6-7890-1234-abcd-3456789012cd",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
                             Id = "b2c3d4e5-f678-9012-abcd-2345678901bc",
                             Name = "User",
                             NormalizedName = "USER"
@@ -235,7 +241,7 @@ namespace dotnetbackend.Migrations
 
                     b.HasIndex("CarDealerShipId");
 
-                    b.ToTable("Car");
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("dotnetbackend.models.CarDealerShips", b =>
@@ -269,6 +275,21 @@ namespace dotnetbackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CarDealerShips");
+                });
+
+            modelBuilder.Entity("dotnetbackend.models.LikedCar", b =>
+                {
+                    b.Property<string>("PersonId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonId", "CarId");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("LikedCars");
                 });
 
             modelBuilder.Entity("dotnetbackend.models.Person", b =>
@@ -396,9 +417,38 @@ namespace dotnetbackend.Migrations
                     b.Navigation("CarDealerShip");
                 });
 
+            modelBuilder.Entity("dotnetbackend.models.LikedCar", b =>
+                {
+                    b.HasOne("dotnetbackend.models.Car", "Car")
+                        .WithMany("LikedCars")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dotnetbackend.models.Person", "Person")
+                        .WithMany("LikedCar")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("dotnetbackend.models.Car", b =>
+                {
+                    b.Navigation("LikedCars");
+                });
+
             modelBuilder.Entity("dotnetbackend.models.CarDealerShips", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("dotnetbackend.models.Person", b =>
+                {
+                    b.Navigation("LikedCar");
                 });
 #pragma warning restore 612, 618
         }

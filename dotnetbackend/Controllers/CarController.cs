@@ -8,6 +8,7 @@ using dotnetbackend.Helpers;
 using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
 using dotnetbackend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,7 +27,7 @@ namespace dotnetbackend.Controllers
       _carDealerShipService = carDealerShipService;
     }
 
-
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] CQueryObject queryObject)
     {
@@ -42,6 +43,7 @@ namespace dotnetbackend.Controllers
       return Ok(cars);
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
@@ -58,6 +60,7 @@ namespace dotnetbackend.Controllers
       return Ok(car);
     }
 
+    [Authorize]
     [HttpPost("{CarDealerShipId:int}")]
     public async Task<IActionResult> Create([FromRoute] int CarDealerShipId, [FromBody] CreateCarRequest carDto)
     {
@@ -81,6 +84,7 @@ namespace dotnetbackend.Controllers
       return CreatedAtAction(nameof(GetById), new { id = car?.Id }, car);
     }
 
+    [Authorize]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCarRequest carDto)
     {
@@ -97,6 +101,7 @@ namespace dotnetbackend.Controllers
       return Ok(updatedcar);
     }
 
+    [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
@@ -113,6 +118,7 @@ namespace dotnetbackend.Controllers
       return NoContent();
     }
 
+    
     [HttpGet("dealer/{dealerShipId:int}")]
     public async Task<IActionResult> GetCarsByDealerShipId([FromRoute] int dealerShipId)
     {
