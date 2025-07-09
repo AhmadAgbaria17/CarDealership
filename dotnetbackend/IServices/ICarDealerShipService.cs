@@ -11,7 +11,7 @@ namespace dotnetbackend.IServices
   {
     Task<List<CarDealerShipDto>> GetAllAsync(CDHQueryObject queryObject);
     Task<CarDealerShipDto?> GetByIdAsync(int id);
-    Task<CarDealerShipDto> CreateAsync(CreateCarDealerShipRequest carDealerShipDto);
+    Task<CarDealerShipDto> CreateAsync(CreateCarDealerShipRequest carDealerShipDto , string? username);
     Task<CarDealerShipDto?> UpdateAsync(int id, UpdateCarDealerShipRequest carDealerShipDto);
     Task<bool> DeleteAsync(int id);
     Task<bool> IsCarDealerShipExistsAsync(int id);

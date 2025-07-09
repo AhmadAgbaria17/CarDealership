@@ -43,7 +43,8 @@ namespace dotnetbackend.Repository
 
     public async Task<List<CarDealerShips>> GetAllCarDealerShipsAsync(CDHQueryObject queryObject)
     {
-      var CarDealerShip = _context.CarDealerShips.Include(c => c.Cars).AsQueryable();
+      var CarDealerShip = _context.CarDealerShips.Include(c => c.Cars).Include(a => a.Person).AsQueryable();
+
       if (!string.IsNullOrEmpty(queryObject.Name))
       {
         CarDealerShip = CarDealerShip.Where(c => c.Name.Contains(queryObject.Name));
@@ -75,7 +76,7 @@ namespace dotnetbackend.Repository
 
     public async Task<CarDealerShips> GetCarDealerShipByIdAsync(int id)
     {
-      return await _context.CarDealerShips.Include(c => c.Cars).FirstOrDefaultAsync(i => i.Id == id)
+      return await _context.CarDealerShips.Include(c => c.Cars).Include(a=>a.Person).FirstOrDefaultAsync(i => i.Id == id)
              ?? throw new KeyNotFoundException($"CarDealerShip with id {id} not found."); 
              
     }

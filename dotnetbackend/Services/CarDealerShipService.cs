@@ -8,6 +8,8 @@ using dotnetbackend.Helpers;
 using dotnetbackend.IRepository;
 using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
+using dotnetbackend.models;
+using Microsoft.AspNetCore.Identity;
 
 namespace dotnetbackend.Services
 {
@@ -15,17 +17,29 @@ namespace dotnetbackend.Services
   {
 
     private readonly ICarDealerShipsRepository _carDealerShipsRepository;
+    private readonly UserManager<Person> _userManager;
 
 
-    public CarDealerShipService(ICarDealerShipsRepository carDealerShipsRepository)
+    public CarDealerShipService(ICarDealerShipsRepository carDealerShipsRepository,
+      UserManager<Person> userManager)
     {
       _carDealerShipsRepository = carDealerShipsRepository;
+      _userManager = userManager;
     }
 
 
-    public async Task<CarDealerShipDto> CreateAsync(CreateCarDealerShipRequest carDealerShipDto)
+    public async Task<CarDealerShipDto> CreateAsync(CreateCarDealerShipRequest carDealerShipDto , string username)
     {
+      var Person = await _userManager.FindByNameAsync(username);
+
+      if (Person?.Id == null)
+      {
+        throw new Exception("User not found");
+      }
+
       var carDealerShip = carDealerShipDto.ToCarDealerShipFromCreateDto();
+      carDealerShip.PersonId = Person.Id;
+      
       await _carDealerShipsRepository.AddCarDealerShipAsync(carDealerShip);
       return carDealerShip.ToCarDealerShipDto();
       

@@ -16,7 +16,10 @@ namespace dotnetbackend.models
     public String Address { get; set; } = string.Empty;
     public int[] Coordinates { get; set; } = new int[2];
     public String Phone { get; set; } = string.Empty;
-    public List<Car> Cars { get; set; } = new List<Car>();
+    public List<Car> Cars { get; set; } 
+
+    public String PersonId { get; set; } 
+    public Person Person { get; set; }
 
 
   }

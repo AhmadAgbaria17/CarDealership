@@ -20,6 +20,7 @@ namespace dotnetbackend.Mappers
         Address = carDealerShips.Address,
         Coordinates = carDealerShips.Coordinates,
         Phone = carDealerShips.Phone,
+        CreatedBy = carDealerShips.Person?.UserName ?? "Unknown",
         Cars = carDealerShips.Cars.Select(car => car.ToCarDto()).ToList()
       };
     }

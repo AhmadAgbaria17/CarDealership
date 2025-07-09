@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Dtos.CarDealerShip;
+using dotnetbackend.Extensions;
 using dotnetbackend.Helpers;
 using dotnetbackend.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -69,7 +70,10 @@ namespace dotnetbackend.Controllers
       {
         return BadRequest("Car dealer ship data is required");
       }
-      var carDealerShip = await _carDealerShipService.CreateAsync(carDealerShipDto);
+
+      var username = User.GetUserName();
+
+      var carDealerShip = await _carDealerShipService.CreateAsync(carDealerShipDto , username);
       return CreatedAtAction(nameof(GetById), new { id = carDealerShip.Id }, carDealerShip);
     }
 

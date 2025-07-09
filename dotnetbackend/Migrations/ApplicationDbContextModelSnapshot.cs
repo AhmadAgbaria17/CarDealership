@@ -268,11 +268,17 @@ namespace dotnetbackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PersonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("CarDealerShips");
                 });
@@ -415,6 +421,17 @@ namespace dotnetbackend.Migrations
                         .HasForeignKey("CarDealerShipId");
 
                     b.Navigation("CarDealerShip");
+                });
+
+            modelBuilder.Entity("dotnetbackend.models.CarDealerShips", b =>
+                {
+                    b.HasOne("dotnetbackend.models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("dotnetbackend.models.LikedCar", b =>
