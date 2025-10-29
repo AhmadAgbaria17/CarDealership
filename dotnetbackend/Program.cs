@@ -5,6 +5,7 @@ using dotnetbackend.models;
 using dotnetbackend.Repository;
 using dotnetbackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -122,6 +123,13 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseCors(options =>
+{
+  options.AllowAnyMethod()
+  .AllowAnyHeader()
+  .AllowCredentials()
+  .SetIsOriginAllowed(origin => true); // Allow any origin
+});
 app.UseAuthentication();
 app.UseAuthorization();
 

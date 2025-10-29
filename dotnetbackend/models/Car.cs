@@ -23,7 +23,9 @@ namespace dotnetbackend.models
     public string Mileage { get; set; } = string.Empty;
     public string Engine { get; set; } = string.Empty;
     public string HorsePower { get; set; } = string.Empty;
+
     public string Type { get; set; } = string.Empty;
+    
 
     // One to Many relationship with CarDealerShips
     public int? CarDealerShipId { get; set; }

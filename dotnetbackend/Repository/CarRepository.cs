@@ -50,12 +50,25 @@ namespace dotnetbackend.Repository
         carsQuery = carsQuery.Where(c => c.ModelName.Contains(queryObject.ModelName));
       }
 
+      if (queryObject.IsDescending == true)
+      {
+        carsQuery = carsQuery.OrderByDescending(c => c.Year);
+      }
+      else
+      {
+        carsQuery = carsQuery.OrderBy(c => c.Year);
+      }
+
+
+
         if (queryObject.PageNumber > 0 && queryObject.PageSize > 0)
       {
         carsQuery = carsQuery
           .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
           .Take(queryObject.PageSize);
       }
+
+      
 
       return await carsQuery.ToListAsync();
     }
