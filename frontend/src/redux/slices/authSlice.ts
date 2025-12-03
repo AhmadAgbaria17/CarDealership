@@ -1,16 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-interface User {
-  id?: string;
-  username?: string;
-  email?: string;
-}
-
-interface AuthState {
-  user : User | null;
-  registerMessage: string | null;
-}
+import type { AuthState, User } from "../../interfaces/types";
 
 const userFromStorage = localStorage.getItem("user");
 const initialState: AuthState = {

@@ -1,13 +1,22 @@
 import { toast } from "react-toastify";
 import "../login/Login.css"
-  import { useEffect , useState } from "react";
+import { useEffect , useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux"
+import type { RootState , AppDispatch } from "../../redux/stores";
+import { registerUser } from "../../redux/apiCalls/authApiCall";
+import swal from "sweetalert";
+
+
 
 
 
 const Register: React.FC = () => {
 
+  const dispatch = useDispatch<AppDispatch>();
+  const {registerMessage} = useSelector((state:RootState)=>state.auth);
 
-  const [username, setUsername] = useState<string>("");
+  const [userName, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -20,14 +29,27 @@ const Register: React.FC = () => {
   const submitHandler = (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
 
-    if(username.trim() === "" || email.trim() === "" || password.trim() === ""){
+    if(userName.trim() === "" || email.trim() === "" || password.trim() === ""){
      toast.error("All fields are required");
      return
     }
 
-
-
+    dispatch(registerUser({userName, email, password}));
   }
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (registerMessage) {
+      swal({
+        title: registerMessage,
+        icon: registerMessage === "Register succeded" ? "success" : "error",
+      }).then(() => {
+        if (registerMessage === "Register succeded") {
+          navigate("/login");
+        }
+      });
+    }
+  }, [registerMessage, navigate]);
+
   
   return (
     <div className='form-container'>
@@ -39,7 +61,7 @@ const Register: React.FC = () => {
            type="text" 
            id="username" 
            name="username" 
-           value={username}
+           value={userName}
            onChange={(e)=>setUsername(e.target.value)}
            />
         </div>

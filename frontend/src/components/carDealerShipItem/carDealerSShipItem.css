@@ -1,0 +1,44 @@
+.car-dealership-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.car-dealership-card:hover {
+  background-color:#64748b ;
+}
+
+
+.car-dealership-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.car-dealership-card__header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+
+.car-dealership-card__header span {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.car-dealership-card__contact {
+  margin: 0;
+}
+
+.car-dealership-card__created {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}

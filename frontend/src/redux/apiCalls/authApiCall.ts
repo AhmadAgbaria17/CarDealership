@@ -1,22 +1,20 @@
 import {authActions} from "../slices/authSlice";
 import {toast} from "react-toastify"
 import type { AppDispatch } from "../stores";
+import type { User } from "../../interfaces/types";
+import request from "../../utils/request";
 
-interface User {
-  id?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-}
+
 
 export function registerUser(user:User){
   return async (dispatch : AppDispatch): Promise<void> =>{
     try{
 
-      console.log(user)
-      dispatch(authActions.register("Register succeded")); 
+      const response = await request.post("/person/register", user);
+      dispatch(authActions.register(response.data.registerMessage)); 
     } catch (err) {
     if (err instanceof Error) {
+      console.log(err)
       toast.error(`Registration failed: ${err.message}`);
     } else {
       toast.error("Registration failed: Unknown error");
@@ -31,7 +29,10 @@ export function registerUser(user:User){
 export function loginUser(user:User){
   return async (dispatch : AppDispatch):Promise<void> =>{
     try{
-      dispatch(authActions.login(user));
+      const response = await request.post("/person/login", user);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      dispatch(authActions.login(response.data));
+      toast.success("Login successful");
       
     } catch (err) {
     if (err instanceof Error) {

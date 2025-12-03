@@ -4,6 +4,7 @@ import Header from './components/header/Header';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import CarDealerShips from './pages/carDealerShips/CarDealerShips';
 
 function App() {
 
@@ -14,9 +15,9 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/car-dealer-ships' element={<CarDealerShips/>}/>
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
-
       </Routes>
 
     

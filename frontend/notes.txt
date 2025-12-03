@@ -1,0 +1,10 @@
+
+
+
+
+frontend :
+npm run dev 
+
+
+backend:
+dotnet watch run 

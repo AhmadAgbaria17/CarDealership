@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnetbackend.Dtos.CarDealerShip;
+using dotnetbackend.Dtos.Car;
 using dotnetbackend.models;
 using dotnetbackend.Repository;
 
@@ -21,7 +22,7 @@ namespace dotnetbackend.Mappers
         Coordinates = carDealerShips.Coordinates,
         Phone = carDealerShips.Phone,
         CreatedBy = carDealerShips.Person?.UserName ?? "Unknown",
-        Cars = carDealerShips.Cars.Select(car => car.ToCarDto()).ToList()
+        Cars = carDealerShips.Cars?.Select(car => car.ToCarDto()).ToList() ?? new List<CarDto>()
       };
     }
 

@@ -31,7 +31,5 @@ namespace dotnetbackend.Dtos.CarDealerShip
     [StringLength(15, ErrorMessage = "Phone number cannot be longer than 15 characters")]
     public String Phone { get; set; } = string.Empty;
 
-    public List<CarDto> Cars { get; set; } = new List<CarDto>();
-
     }
 }

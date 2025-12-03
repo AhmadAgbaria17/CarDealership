@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnetbackend.Controllers
-{   [Route("api/person")]
+{ [Route("api/person")]
   [ApiController]
   public class PersonController : ControllerBase
   {
@@ -29,10 +29,13 @@ namespace dotnetbackend.Controllers
     {
       try
       {
+
         if (registerDto == null || !ModelState.IsValid)
         {
           return BadRequest("Invalid registration data.");
         }
+        
+        
 
         var person = new Person
         {
@@ -41,10 +44,11 @@ namespace dotnetbackend.Controllers
         };
 
         var createdUser = await _userManager.CreateAsync(person, registerDto.Password);
-
+      
         if (createdUser.Succeeded)
         {
           var roleResult = await _userManager.AddToRoleAsync(person, "User");
+          
           
           if (roleResult.Succeeded)
           {
@@ -53,7 +57,8 @@ namespace dotnetbackend.Controllers
               {
                 UserName = person.UserName,
                 Email = person.Email,
-                Token = _tokenService.CreateToken(person)
+                Token = _tokenService.CreateToken(person),
+                RegisterMessage = "Register succeded"
               });
           }
           else
