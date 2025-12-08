@@ -44,6 +44,7 @@ namespace dotnetbackend.Repository
     public async Task<List<CarDealerShips>> GetAllCarDealerShipsAsync(CDHQueryObject queryObject)
     {
       var CarDealerShip = _context.CarDealerShips.Include(c => c.Cars).Include(a => a.Person).AsQueryable();
+      
 
       if (!string.IsNullOrEmpty(queryObject.Name))
       {
@@ -97,7 +98,6 @@ namespace dotnetbackend.Repository
       existingCarDealerShip.Name = carDealerShip.Name;
       existingCarDealerShip.City = carDealerShip.City;
       existingCarDealerShip.Address = carDealerShip.Address;
-        existingCarDealerShip.Coordinates = carDealerShip.Coordinates;
       existingCarDealerShip.Phone = carDealerShip.Phone;
 
       _context.CarDealerShips.Update(existingCarDealerShip);

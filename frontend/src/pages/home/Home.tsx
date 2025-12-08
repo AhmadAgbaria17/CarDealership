@@ -36,7 +36,7 @@ const Home: React.FC = () => {
             <button className="btn btn-outline" onClick={handleViewAll}>
               Check out all Car DealerShips
             </button>
-          </div>
+          </div>    
           
 
           {!user && (

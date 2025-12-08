@@ -25,7 +25,6 @@ export function registerUser(user:User){
   }
 }
 
-
 export function loginUser(user:User){
   return async (dispatch : AppDispatch):Promise<void> =>{
     try{

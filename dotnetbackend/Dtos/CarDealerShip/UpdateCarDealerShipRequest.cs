@@ -21,10 +21,6 @@ namespace dotnetbackend.Dtos.CarDealerShip
     [StringLength(200, ErrorMessage = "Address cannot be longer than 200 characters")]
     public String Address { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Coordinates are required")]
-    [MinLength(2, ErrorMessage = "Coordinates must contain exactly 2 elements")]
-    public int[] Coordinates { get; set; } = new int[2];
-
     [Required(ErrorMessage = "Phone number is required")]
     [Phone(ErrorMessage = "Phone number must be a valid phone number")]
     [StringLength(15, ErrorMessage = "Phone number cannot be longer than 15 characters")]

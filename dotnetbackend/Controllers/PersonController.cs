@@ -102,6 +102,7 @@ namespace dotnetbackend.Controllers
         return Ok(
           new NewPersonDto
           {
+            id=person.Id,
             UserName = person.UserName,
             Email = person.Email,
             Token = _tokenService.CreateToken(person)

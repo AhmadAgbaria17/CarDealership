@@ -14,8 +14,10 @@ namespace dotnetbackend.Dtos.CarDealerShip
     public String Address { get; set; } = string.Empty;
     public int[] Coordinates { get; set; } = new int[2];
     public String Phone { get; set; } = string.Empty;
-
     public String CreatedBy { get; set; } = string.Empty;
+    public String PersonId { get; set; } = string.Empty;
+
+
     public List<CarDto> Cars { get; set; } = new List<CarDto>();
 
 

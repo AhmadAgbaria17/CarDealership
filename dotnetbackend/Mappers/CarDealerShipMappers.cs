@@ -22,6 +22,7 @@ namespace dotnetbackend.Mappers
         Coordinates = carDealerShips.Coordinates,
         Phone = carDealerShips.Phone,
         CreatedBy = carDealerShips.Person?.UserName ?? "Unknown",
+        PersonId = carDealerShips.PersonId,
         Cars = carDealerShips.Cars?.Select(car => car.ToCarDto()).ToList() ?? new List<CarDto>()
       };
     }

@@ -19,7 +19,8 @@ export interface CarDealerShip {
   address: string;
   coordinates: number[];
   phone: string;
-  createdBy: string;
+  createdBy?: string;
+  personId?: string;
   cars: Car[];
 }
 
@@ -39,7 +40,6 @@ export interface Car {
   horsePower: string;
   type: string;
   carDealerShipId?: number;
-  personId?: number;
 }
 
 

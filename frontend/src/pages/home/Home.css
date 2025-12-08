@@ -1,7 +1,7 @@
 :root{
 	--primary: #1f6feb;
 	--bg: #263043;
-	--muted: #6b7280;
+	--muted: #a7b1c4;
 }
 
 .home-wrapper{
@@ -15,10 +15,10 @@
 	gap: 40px;
 	align-items:center;
 	justify-content:space-between;
-	background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.95));
 	padding: 36px;
 	border-radius: 14px;
 	box-shadow: 0 6px 24px rgba(29,31,41,0.06);
+  border: 1px solid #fff  ;
 }
 
 .hero-content{
@@ -27,7 +27,7 @@
 .hero-title{
   font-size:32px;
   margin:0 0 8px;
-  color:#0f172a
+  color:#fff
 }
 .hero-sub{
   color:var(--muted);
@@ -53,7 +53,16 @@
 .btn-outline{
   background:transparent;
   border:1px solid #d1d5db;
-  color: #0f172a
+  color: #fff
+}
+
+.btn-outline:hover{
+  background:var(--muted);
+  color:#fff
+}
+
+.btn-primary:hover{
+  background:#203566;
 }
 
 .login-hint{
@@ -107,13 +116,12 @@
   margin-top:28px
 }
 .feature{
-  background:#fff;
+  border: 1px solid #fff;
   padding:18px;
   border-radius:10px;
-  border:1px solid rgba(15,23,42,0.03)
 }
 .feature h3{
-  color:#0f172a;
+  color:#fff;
   margin:0 0 6px
 }
 .feature p{

@@ -19,6 +19,18 @@ const carDealerShipsSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>){
       state.loading = action.payload;
     },
+    deleteCarDealerShip(state, action: PayloadAction<number>){
+      if(state.carDealerShips){
+         state.carDealerShips = state.carDealerShips.filter(c => c.id !== action.payload);
+      }
+    },
+    updateCarDealerShip(state, action: PayloadAction<CarDealerShip>){
+      if(state.carDealerShips){
+        state.carDealerShips = state.carDealerShips.map(c => 
+          c.id === action.payload.id ? action.payload : c
+        )
+      }
+    },
   }})
 
 
