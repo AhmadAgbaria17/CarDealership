@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import type { AppDispatch } from "../stores";
 import request from "../../utils/request";
 import { carDealerShipsActions } from "../slices/carDealerShipsSlice";
+import type { CreateCarDealerShips } from "../../interfaces/types";
 
 
 export function getCarDealerShips(){
@@ -24,10 +25,26 @@ export function getCarDealerShips(){
   }
 }
 
+export function createCarDealerShip(dealerShipData: CreateCarDealerShips){
+  return async (dispatch: AppDispatch)=>{
+    try{
+      const {data} = await request.post("/car-dealer-ships", dealerShipData);
+      dispatch(carDealerShipsActions.createCarDealerShip(data));
+      toast.success("Dealership created successfully");
+    }catch(err){
+      if(err instanceof Error){
+        toast.error(err.message);
+      } else {
+         toast.error("Failed to create dealership");
+      }
+    }
+  }
+}
+
 export function deleteCarDealerShip(id: number){
   return async (dispatch: AppDispatch)=>{
     try{
-      await request.delete(`api/car-dealer-ships/${id}`);
+      await request.delete(`/car-dealer-ships/${id}`);
       dispatch(carDealerShipsActions.deleteCarDealerShip(id));
       toast.success("Dealership deleted successfully");
     }catch(err){
@@ -43,7 +60,7 @@ export function deleteCarDealerShip(id: number){
 export function updateCarDealerShip(id: number, dealerShipData: Partial<any>){
    return async (dispatch: AppDispatch)=>{
     try{
-      const {data} = await request.put(`api/car-dealer-ships/${id}`, dealerShipData);
+      const {data} = await request.put(`/car-dealer-ships/${id}`, dealerShipData);
       dispatch(carDealerShipsActions.updateCarDealerShip(data));
       toast.success("Dealership updated successfully");
     }catch(err){

@@ -2,9 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AuthState, User } from "../../interfaces/types";
 
-const userFromStorage = localStorage.getItem("user");
+const getUserFromStorage = () => {
+  try {
+    const userFromStorage = localStorage.getItem("user");
+    return userFromStorage ? JSON.parse(userFromStorage) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
 const initialState: AuthState = {
-  user : userFromStorage ? JSON.parse(userFromStorage) : null,
+  user: getUserFromStorage(),
   registerMessage: null
 }
 

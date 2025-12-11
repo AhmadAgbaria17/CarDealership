@@ -23,6 +23,9 @@ const CarDealerShips: React.FC = () => {
     dispatch(getCarDealerShips());
   },[dispatch])
 
+  
+
+
   const handleEditClick = (e: React.MouseEvent, dealership: CarDealerShip) => {
     e.stopPropagation();
     setSelectedDealership(dealership);
@@ -77,7 +80,7 @@ const CarDealerShips: React.FC = () => {
       
       {myDealerShips.length > 0 && (
         <>
-          <h2>My Dealerships</h2>
+          <h2>My Dealerships</h2> 
           <div className="car-dealer-ships-grid">
           {myDealerShips.map((carDealerShip)=>(
               <div key={carDealerShip.id} className="dealership-card-wrapper" onClick={() => navigateToDetails(carDealerShip.id)}>
@@ -90,7 +93,7 @@ const CarDealerShips: React.FC = () => {
                   </button>
                   <button 
                     className="action-btn delete-btn"
-                    onClick={(e) => handleDeleteClick(e, carDealerShip.id)}
+                    onClick={(e) => handleDeleteClick(e, carDealerShip?.id)}
                   >
                     Delete
                   </button>

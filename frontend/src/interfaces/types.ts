@@ -17,11 +17,18 @@ export interface CarDealerShip {
   name: string;
   city: string;
   address: string;
-  coordinates: number[];
+  coordinates?: number[];
   phone: string;
   createdBy?: string;
   personId?: string;
-  cars: Car[];
+  cars?: Car[];
+}
+
+export interface CreateCarDealerShips {
+  name: string;
+  city: string;
+  address: string;
+  phone: string;
 }
 
 export interface Car {

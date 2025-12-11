@@ -19,6 +19,11 @@ const carDealerShipsSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>){
       state.loading = action.payload;
     },
+    createCarDealerShip(state, action: PayloadAction<CarDealerShip>){
+      if(state.carDealerShips){
+        state.carDealerShips = [...state.carDealerShips, action.payload];
+      }
+    },
     deleteCarDealerShip(state, action: PayloadAction<number>){
       if(state.carDealerShips){
          state.carDealerShips = state.carDealerShips.filter(c => c.id !== action.payload);
@@ -30,7 +35,7 @@ const carDealerShipsSlice = createSlice({
           c.id === action.payload.id ? action.payload : c
         )
       }
-    },
+    }
   }})
 
 

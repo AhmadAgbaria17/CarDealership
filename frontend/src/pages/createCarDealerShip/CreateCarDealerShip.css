@@ -1,0 +1,48 @@
+.create-car-dealer-ship-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh - 64px;
+    
+    
+}
+.create-car-dealer-ship-header{
+    display: flex;
+    width: 100%;
+    margin: 20px;
+    border-bottom: 3px solid #ccc;
+    padding-bottom: 10px;
+}
+.create-car-dealer-ship-form{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding-left: 20px;    
+    
+}
+.create-car-dealer-ship-form-group{
+    margin-bottom: 10px;
+}
+.create-car-dealer-ship-form-group label{
+    margin-bottom: 5px;
+}
+.create-car-dealer-ship-form-group input{
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+} 
+.create-car-dealer-ship-button{
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    
+}
+
+.create-car-dealer-ship-button:hover{
+    background-color: #45a049;
+}

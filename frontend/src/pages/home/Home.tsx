@@ -8,6 +8,9 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
 
+  
+  
+
   const handleCreate = () => {
     if (!user) {
       toast.info("Please log in to create a CarDealerShip.");
@@ -45,9 +48,6 @@ const Home: React.FC = () => {
 
         </div>
 
-        <div className="hero-visual" aria-hidden>
-          {/* Placeholder for hero image or illustration */}
-        </div>
       </section>
 
       <section className="features">
