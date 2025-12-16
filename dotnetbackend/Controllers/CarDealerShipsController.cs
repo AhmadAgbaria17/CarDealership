@@ -58,6 +58,7 @@ namespace dotnetbackend.Controllers
       return Ok(carDealerShip);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCarDealerShipRequest carDealerShipDto)
     {
@@ -71,7 +72,10 @@ namespace dotnetbackend.Controllers
         return BadRequest("Car dealer ship data is required");
       }
 
+
       var username = User.GetUserName();
+      Console.WriteLine(username);
+      
 
       var carDealerShip = await _carDealerShipService.CreateAsync(carDealerShipDto , username);
       return CreatedAtAction(nameof(GetById), new { id = carDealerShip.Id }, carDealerShip);

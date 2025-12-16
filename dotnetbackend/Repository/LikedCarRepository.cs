@@ -27,7 +27,7 @@ namespace dotnetbackend.Repository
         ModelName = car.Car.ModelName,
         Year = car.Car.Year,
         Color = car.Car.Color,
-        Image = car.Car.Image,
+        Images = car.Car.Images,
         Description = car.Car.Description,
         Price = car.Car.Price,
         Fuel = car.Car.Fuel,

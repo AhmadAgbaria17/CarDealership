@@ -6,11 +6,11 @@ import type { CreateCarDealerShips } from "../../interfaces/types";
 
 
 export function getCarDealerShips(){
+
   return async (dispatch : AppDispatch): Promise<void>=>{
     try{
       dispatch(carDealerShipsActions.setLoading(true));
       const response = await request.get("/car-dealer-ships");
-      console.log(response.data)
       dispatch(carDealerShipsActions.setCarDealerShips(response.data));
     }catch(err){
       if(err instanceof Error){
@@ -26,9 +26,19 @@ export function getCarDealerShips(){
 }
 
 export function createCarDealerShip(dealerShipData: CreateCarDealerShips){
+  const user = localStorage.getItem("user");
+  const token = user ? JSON.parse(user).token : null;
   return async (dispatch: AppDispatch)=>{
     try{
-      const {data} = await request.post("/car-dealer-ships", dealerShipData);
+      const {data} = await request.post("/car-dealer-ships", dealerShipData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(data)
       dispatch(carDealerShipsActions.createCarDealerShip(data));
       toast.success("Dealership created successfully");
     }catch(err){

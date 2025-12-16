@@ -130,6 +130,7 @@ app.UseCors(options =>
   .AllowCredentials()
   .SetIsOriginAllowed(origin => true); // Allow any origin
 });
+
 app.UseAuthentication();
 app.UseAuthorization();
 

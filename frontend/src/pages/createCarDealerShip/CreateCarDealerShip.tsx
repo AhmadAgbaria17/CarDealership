@@ -1,12 +1,15 @@
 import './CreateCarDealerShip.css';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { useState } from "react";
 import { createCarDealerShip } from '../../redux/apiCalls/carDealerShipsApiCall';
 import type { CreateCarDealerShips } from '../../interfaces/types';
-
+import type { AppDispatch } from '../../redux/stores';
+import { toast } from 'react-toastify';
 
 const CreateCarDealerShip: React.FC = () => {
 
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,9 +19,13 @@ const CreateCarDealerShip: React.FC = () => {
     phone: ""
   });
 
-  const handleSubmit = (e: React.FormEvent)=>{
+  const handleSubmit = async (e: React.FormEvent)=>{
     e.preventDefault();
     try{
+      if(!formData.name || !formData.city || !formData.address || !formData.phone){
+        toast.error("All fields are required");
+        return;
+      }
       setLoading(true);
       const dealerShipData : CreateCarDealerShips = {
         name: formData.name,
@@ -26,12 +33,12 @@ const CreateCarDealerShip: React.FC = () => {
         address: formData.address,
         phone: formData.phone,
       };
-     createCarDealerShip(dealerShipData);
+     await dispatch(createCarDealerShip(dealerShipData));
+      navigate('/car-dealer-ships');
     }catch(error){
-      console.log(error);
+      toast.error("Failed to create dealership");
     }finally{
-      setLoading(false);
-      navigate("/car-dealer-ships");
+    setLoading(false);
     }
   }
   

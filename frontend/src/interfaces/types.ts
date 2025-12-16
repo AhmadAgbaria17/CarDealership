@@ -37,7 +37,7 @@ export interface Car {
   modelName: string;
   year: number;
   color: string;
-  image: string;
+  images : string[];
   description: string;
   price: string;
   fuel: string;

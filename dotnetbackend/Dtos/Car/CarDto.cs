@@ -13,7 +13,7 @@ namespace dotnetbackend.Dtos.Car
     public string ModelName { get; set; } = string.Empty;
     public int Year { get; set; }
     public string Color { get; set; } = string.Empty;
-    public string Image { get; set; } = string.Empty;
+    public string[] Images { get; set; } = [];
     public string Description { get; set; } = string.Empty;
     public string Price { get; set; } = string.Empty;
     public string Fuel { get; set; } = string.Empty;

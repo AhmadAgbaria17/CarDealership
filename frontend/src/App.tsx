@@ -6,6 +6,7 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import CarDealerShips from './pages/carDealerShips/CarDealerShips';
 import CreateCarDealerShip from './pages/createCarDealerShip/CreateCarDealerShip';
+import SingleCarDealerShip from './pages/singleCarDealerShip/SingleCarDealerShip';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/create-car-dealer-ship' element={<CreateCarDealerShip />}/>
+        <Route path='/car-dealer-ships/:id' element={<SingleCarDealerShip />}/>
       </Routes>
 
     

@@ -33,7 +33,6 @@ namespace dotnetbackend.Mappers
         Name = carDealerShipDto.Name,
         City = carDealerShipDto.City,
         Address = carDealerShipDto.Address,
-        Coordinates = carDealerShipDto.Coordinates,
         Phone = carDealerShipDto.Phone
         };
     }

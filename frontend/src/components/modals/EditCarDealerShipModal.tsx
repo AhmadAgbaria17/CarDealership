@@ -26,6 +26,9 @@ const EditCarDealerShipModal: React.FC<EditCarDealerShipModalProps> = ({ dealers
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if(!formData.name || !formData.city || !formData.address || !formData.phone){
+          throw new Error("All fields are required");
+        }
         await dispatch(updateCarDealerShip(dealership.id, formData));
         onClose();
     };
