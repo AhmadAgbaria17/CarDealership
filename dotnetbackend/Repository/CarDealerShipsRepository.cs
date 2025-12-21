@@ -69,7 +69,7 @@ namespace dotnetbackend.Repository
       {
         CarDealerShip = CarDealerShip
           .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
-          .Take(queryObject.PageSize);
+          .Take(queryObject.PageSize);  
       }
 
       return await CarDealerShip.ToListAsync();

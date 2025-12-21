@@ -24,7 +24,7 @@ namespace dotnetbackend.Dtos.Car
     public string Color { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Images URL is required")]
-    [Url(ErrorMessage = "Images must be a valid URL")]
+    [MinLength(1, ErrorMessage = "At least one image URL is required")]
     public string[] Images { get; set; } = [];
 
     [Required(ErrorMessage = "Description is required")]

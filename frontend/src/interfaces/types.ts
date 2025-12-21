@@ -58,4 +58,10 @@ export interface AuthState {
 export interface CarDealerShipsState {
   carDealerShips: CarDealerShip[] | null;
   loading: boolean;
+  selectedCarDealerShip: CarDealerShip | null;
+}
+
+export interface CarState {
+  car: Car | null;
+  loading: boolean;
 }

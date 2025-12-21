@@ -6,6 +6,7 @@ import type { CarDealerShip, CarDealerShipsState } from "../../interfaces/types"
 const initialState: CarDealerShipsState ={
   carDealerShips: [],
   loading: false,
+  selectedCarDealerShip: null,
 }
 
 
@@ -35,7 +36,11 @@ const carDealerShipsSlice = createSlice({
           c.id === action.payload.id ? action.payload : c
         )
       }
-    }
+    },
+    setSelectedCarDealerShip(state, action: PayloadAction<CarDealerShip | null>){
+      state.selectedCarDealerShip = action.payload;
+    },
+    
   }})
 
 

@@ -1,0 +1,98 @@
+.car-item-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+
+  height: 100%;
+}
+
+.car-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.car-item-image-container {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-item-placeholder {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.car-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.car-item-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e5e7eb;
+}
+
+.car-item-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.car-item-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin: 0.5rem 0;
+}
+
+.car-item-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+.car-item-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.car-item-detail strong {
+  font-weight: 200;
+  color: #e5e7eb;
+}
+
+.car-item-description {
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  display: -webkit-box;
+  -webkit-line-clam: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}

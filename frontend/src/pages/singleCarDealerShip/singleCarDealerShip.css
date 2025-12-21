@@ -1,0 +1,55 @@
+.single-car-dealer-ship-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.single-car-dealer-ship-information-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  margin: 1rem 0;
+  width: 95%;
+  height: 50%;
+  border-radius: 8px;
+}
+
+.single-car-dealer-ship-information-container p span {
+  font-weight: bold;
+  margin-right: 0.3rem;
+  color: #e2e8f0;
+  font-size: 1.2rem;
+}
+
+.single-car-dealer-ship-container h2 {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  color: #e2e8f0;
+  font-size: 1.8rem;
+  width: 95%;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.single-car-dealer-ship-cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  width: 95%;
+  margin: 1rem;
+  padding-bottom: 2rem;
+}
+
+.car-card-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.single-car-dealer-ship-cars-grid-no-cars{
+  color: #e2e8f0;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+}

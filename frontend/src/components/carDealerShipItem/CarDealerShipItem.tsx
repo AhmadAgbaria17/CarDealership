@@ -17,7 +17,7 @@ const CarDealerShipItem: React.FC<CarDealerShipItemProps> = ({carDealerShip}) =>
       <p className="car-dealership-card__contact">
         Phone: <strong>{carDealerShip.phone}</strong>
       </p>
-      <p>amount: {carDealerShip.cars.length}</p>
+      <p>amount: {carDealerShip.cars?.length}</p>
       <p className="car-dealership-card__created">Added by {carDealerShip.createdBy}</p>
 
     </div>

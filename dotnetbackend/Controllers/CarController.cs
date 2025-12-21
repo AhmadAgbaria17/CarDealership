@@ -43,7 +43,7 @@ namespace dotnetbackend.Controllers
       return Ok(cars);
     }
 
-    [Authorize]
+
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
