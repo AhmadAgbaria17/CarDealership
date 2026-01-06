@@ -49,7 +49,6 @@ namespace dotnetbackend.Mappers
         HorsePower = carDto.HorsePower,
         Type = carDto.Type,
         CarDealerShipId = CarDealerShipId,
-      
       };
     }
         

@@ -8,6 +8,7 @@ import CarDealerShips from './pages/carDealerShips/CarDealerShips';
 import CreateCarDealerShip from './pages/createCarDealerShip/CreateCarDealerShip';
 import SingleCarDealerShip from './pages/singleCarDealerShip/SingleCarDealerShip';
 import Car from './pages/car/Car';
+import AddCar from './pages/addCar/AddCar';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/create-car-dealer-ship' element={<CreateCarDealerShip />}/>
         <Route path='/car-dealer-ships/:id' element={<SingleCarDealerShip />}/>
         <Route path='/car-dealer-ships/:id/:carId' element={<Car />}/>
+        <Route path= 'car-dealer-ships/:id/add-car' element={<AddCar/>}/>
       </Routes>
 
     

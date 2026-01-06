@@ -45,8 +45,9 @@ namespace dotnetbackend.Controllers
     [Authorize]
     public async Task<IActionResult> LikeCar([FromRoute] int carId)
     {
-      var person = User.GetUserName();
-      var user = await _userManager.FindByNameAsync(person);
+      var username = User.GetUserName();
+      var user = await _userManager.FindByNameAsync(username);
+      Console.WriteLine(user);
       if (user == null)
         return Unauthorized("User not found");
 

@@ -26,17 +26,6 @@ namespace dotnetbackend.Repository
         Company = car.Car.Company,
         ModelName = car.Car.ModelName,
         Year = car.Car.Year,
-        Color = car.Car.Color,
-        Images = car.Car.Images,
-        Description = car.Car.Description,
-        Price = car.Car.Price,
-        Fuel = car.Car.Fuel,
-        Transmission = car.Car.Transmission,
-        Mileage = car.Car.Mileage,
-        Engine = car.Car.Engine,
-        HorsePower = car.Car.Transmission,
-        Type = car.Car.Type,
-        CarDealerShipId = car.Car.CarDealerShipId,
       }).ToListAsync();
     }
 

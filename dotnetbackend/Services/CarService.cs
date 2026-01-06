@@ -9,13 +9,20 @@ using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
 using dotnetbackend.models;
 
+
+
+
+
 namespace dotnetbackend.Services
 {
   public class CarService : ICarService
   {
+  
     private readonly ICarRepository _carRepository;
+    
     public CarService(ICarRepository carRepository)
     {
+    
       _carRepository = carRepository;
     }
 
@@ -30,7 +37,7 @@ namespace dotnetbackend.Services
 
     public async Task<bool> DeleteCarAsync(int id)
     {
-      
+
       return await _carRepository.DeleteCarAsync(id);
     }
 

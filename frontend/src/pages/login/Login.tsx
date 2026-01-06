@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useEffect , useState } from "react";
 import {useDispatch , useSelector} from "react-redux"
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../redux/apiCalls/authApiCall';
+import { getlikedCars, loginUser } from '../../redux/apiCalls/authApiCall';
 import type { AppDispatch , RootState } from '../../redux/stores';
 
 
@@ -31,13 +31,16 @@ const Login : React.FC = () => {
     }
 
     dispatch(loginUser({userName,password}));
+
   }
   const navigate = useNavigate();
+  
   useEffect(()=>{
     if(user){
+      dispatch(getlikedCars());
       navigate("/");
     }
-  })
+  },[dispatch,user])
 
 
   return (

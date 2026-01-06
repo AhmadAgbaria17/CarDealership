@@ -1,4 +1,9 @@
 
+- complete the header liked cars dropdown 
+- edit photos of the car 
+
+
+
 frontend :
 npm run dev 
 

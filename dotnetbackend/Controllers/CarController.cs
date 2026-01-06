@@ -8,6 +8,7 @@ using dotnetbackend.Helpers;
 using dotnetbackend.IServices;
 using dotnetbackend.Mappers;
 using dotnetbackend.Services;
+using dotnetbackend.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

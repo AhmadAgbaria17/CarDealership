@@ -128,3 +128,9 @@
 .btn-save:hover {
     background-color: #0056b3;
 }
+
+
+.both-group{
+    display: flex;
+    gap: 1rem;
+}

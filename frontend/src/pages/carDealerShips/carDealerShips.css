@@ -5,14 +5,29 @@
   padding: 1rem;
 }
 
-.car-dealer-ships-container h2 {
+.car-dealer-ships-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.car-dealer-ships-header .add-btn {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.car-dealer-ships-header .add-btn:hover {
+  background-color: #2563eb;
+}
+
+.car-dealer-ships-header h2 {
   margin-left: 1rem;
   margin-top: 2rem;
   color: #e2e8f0;
   font-size: 1.8rem;
-  border-bottom: 2px solid #e2e8f0;
   padding-bottom: 0.5rem;
-  margin-bottom: 1.5rem;
+  
 }
 
 .car-dealer-ships-empty-state {

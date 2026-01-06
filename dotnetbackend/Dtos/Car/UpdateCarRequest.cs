@@ -23,8 +23,7 @@ namespace dotnetbackend.Dtos.Car
     [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Color must contain only letters and spaces")]
     public string Color { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Images URL is required")]
-    [Url(ErrorMessage = "Images must be a valid URL")]
+  
     public string[] Images { get; set; } = [];
 
     [Required(ErrorMessage = "Description is required")]

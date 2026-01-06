@@ -80,7 +80,10 @@ const CarDealerShips: React.FC = () => {
       
       {myDealerShips.length > 0 && (
         <>
-          <h2>My Dealerships</h2> 
+          <div className="car-dealer-ships-header">
+          <h2>My Dealerships</h2>
+          <button className="action-btn add-btn" onClick={() => navigate("/create-car-dealer-ship")}>Add New Dealership</button>  
+          </div> 
           <div className="car-dealer-ships-grid">
           {myDealerShips.map((carDealerShip)=>(
               <div key={carDealerShip.id} className="dealership-card-wrapper" onClick={() => navigateToDetails(carDealerShip.id)}>

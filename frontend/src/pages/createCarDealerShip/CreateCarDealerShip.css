@@ -14,6 +14,11 @@
     border-bottom: 3px solid #ccc;
     padding-bottom: 10px;
 }
+
+.create-car-dealer-ship-header h2{
+    margin-left: 1rem;
+}
+
 .create-car-dealer-ship-form{
     display: flex;
     flex-direction: column;

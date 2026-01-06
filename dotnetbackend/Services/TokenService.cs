@@ -26,6 +26,7 @@ namespace dotnetbackend.Services
       {
         new Claim(JwtRegisteredClaimNames.Email, person.Email),
         new Claim(JwtRegisteredClaimNames.GivenName, person.UserName),
+        new Claim(ClaimTypes.NameIdentifier, person.Id),
       };
 
       var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

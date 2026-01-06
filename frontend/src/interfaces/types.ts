@@ -1,15 +1,9 @@
-export interface LikedCar {
-  id?: string;
-  name: string;
-}
-
 export interface User {
   id? : string;
   userName? : string;
   email? : string;
   password? : string;
   token? : string;
-  likedCars?: LikedCar[];
 }
 
 export interface CarDealerShip {
@@ -37,7 +31,7 @@ export interface Car {
   modelName: string;
   year: number;
   color: string;
-  images : string[];
+  images? : string[];
   description: string;
   price: string;
   fuel: string;
@@ -49,19 +43,39 @@ export interface Car {
   carDealerShipId?: number;
 }
 
+export interface CreateCar {
+  company: string;
+  modelName: string;
+  year: number;
+  color: string;
+  images? : string[];
+  description: string;
+  price: string;
+  fuel: string;
+  transmission: string;
+  mileage: string;
+  engine: string;
+  horsePower: string;
+  type: string;
+}
+
+export interface LikedCar {
+  id: number;
+  company: string | undefined;
+  modelName: string | undefined;
+  year: number | undefined;
+}
+
 
 export interface AuthState {
   user : User | null;
   registerMessage: string | null;
+  likedCars: LikedCar[];
 }
 
 export interface CarDealerShipsState {
   carDealerShips: CarDealerShip[] | null;
   loading: boolean;
   selectedCarDealerShip: CarDealerShip | null;
-}
-
-export interface CarState {
   car: Car | null;
-  loading: boolean;
 }

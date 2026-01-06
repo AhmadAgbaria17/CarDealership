@@ -2,15 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import './header.css';
 import { useDispatch, useSelector} from "react-redux";
 import type { AppDispatch, RootState } from '../../redux/stores';
-import { logoutUser } from '../../redux/apiCalls/authApiCall';
+import { getlikedCars, logoutUser } from '../../redux/apiCalls/authApiCall';
 
 
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {user} = useSelector((state:RootState)=>state.auth);
+  const {user , likedCars} = useSelector((state:RootState)=>state.auth);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const likedCars = user?.likedCars ?? [];
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prevState) => !prevState);
@@ -33,6 +32,11 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isDropdownOpen]);
+
+  useEffect(() => {
+    dispatch(getlikedCars());
+  }, [user,dispatch]);
+
 
   return (
     <header className="header">
@@ -58,8 +62,8 @@ const Header = () => {
               <p className='dropdown-title'>Liked Cars</p>
               {likedCars.length ? (
                 <ul className='liked-cars-list'>
-                  {likedCars.map((car, index) => (
-                    <li key={car.id ?? `${car.name}-${index}`}>{car.name}</li>
+                  {likedCars.map((likedcar, index) => (
+                    <li key={likedcar.id ?? `${likedcar}-${index}`}>{likedcar.company} {likedcar.modelName} {likedcar.year}</li>
                   ))}
                 </ul>
               ) : (
@@ -75,8 +79,8 @@ const Header = () => {
       :
        <div >
         <nav className='nav-section'>
-          <ul><a className='nav-btn' href='login'>Login</a></ul>
-          <ul><a className='nav-btn' href='register'>Register</a></ul>
+          <ul><a className='nav-btn' href='/login'>Login</a></ul>
+          <ul><a className='nav-btn' href='/register'>Register</a></ul>
         </nav>
       </div>          } 
     </header>

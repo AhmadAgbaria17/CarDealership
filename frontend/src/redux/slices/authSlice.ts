@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { AuthState, User } from "../../interfaces/types";
+import type { AuthState, LikedCar, User } from "../../interfaces/types";
 
 const getUserFromStorage = () => {
   try {
@@ -13,7 +13,8 @@ const getUserFromStorage = () => {
 
 const initialState: AuthState = {
   user: getUserFromStorage(),
-  registerMessage: null
+  registerMessage: null,
+  likedCars: []
 }
 
 
@@ -30,6 +31,15 @@ const authSlice = createSlice({
     },
     register(state, action: PayloadAction<string>){
       state.registerMessage = action.payload;
+    },
+    addLikedCar(state, action: PayloadAction<LikedCar>){
+      state.likedCars.push(action.payload);
+    },
+    removeLikedCar(state, action: PayloadAction<number>){
+      state.likedCars = state.likedCars.filter(likedcar =>likedcar.id !== action.payload);
+    },
+    getlikedCars(state, action: PayloadAction<LikedCar[]>) {
+      state.likedCars = action.payload;
     },
   }
 })
