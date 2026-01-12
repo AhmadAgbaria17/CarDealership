@@ -3,6 +3,8 @@ import type { Car } from "../../interfaces/types";
 import type { AppDispatch } from "../../redux/stores";
 import { useState } from "react";
 import { updateCar } from "../../redux/apiCalls/carDealerShipsApiCall";
+import { toast } from "react-toastify";
+import "./EditCarModal.css";
 
 interface EditCarModalProps {
   car: Car;
@@ -25,11 +27,56 @@ const EditCarModal:React.FC<EditCarModalProps> = ({car,onClose}) => {
     engine: car.engine,
     horsePower: car.horsePower,
     type: car.type,
-    images: car.images,
+    images: car.images || [],
   })
+  const [imagePreviews, setImagePreviews] = useState<string[]>(car.images || []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+    const invalidFiles = Array.from(files).filter(file => !file.type.startsWith('image/'));
+
+    if (invalidFiles.length > 0) {
+      invalidFiles.forEach(file => {
+        toast.error(`${file.name} is not an image file`);
+      });
+    }
+
+    if (imageFiles.length === 0) return;
+
+    try {
+      const imagePromises = imageFiles.map((file) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64String = reader.result as string;
+            resolve(base64String);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const base64Images = await Promise.all(imagePromises);
+      const updatedImages = [...formData.images, ...base64Images];
+      setFormData({ ...formData, images: updatedImages });
+      setImagePreviews([...imagePreviews, ...base64Images]);
+    } catch {
+      toast.error('Failed to process images');
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const updatedImages = formData.images.filter((_, i) => i !== index);
+    const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
+    setFormData({ ...formData, images: updatedImages });
+    setImagePreviews(updatedPreviews);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -92,6 +139,9 @@ const EditCarModal:React.FC<EditCarModalProps> = ({car,onClose}) => {
                             required
                         />
                     </div>
+                  
+                    </div>
+                    <div>
                     <div className="form-group">
                         <label htmlFor="description">Description</label>
                         <input
@@ -114,9 +164,7 @@ const EditCarModal:React.FC<EditCarModalProps> = ({car,onClose}) => {
                             required
                         />
                     </div>
-                    </div>
-                    <div>
-                          <div className="form-group">
+                        <div className="form-group">
                         <label htmlFor="fuel">Fuel</label>
                         <input
                             type="text"
@@ -138,6 +186,9 @@ const EditCarModal:React.FC<EditCarModalProps> = ({car,onClose}) => {
                             required
                         />
                     </div>
+                  
+                    </div>
+                    <div>
                     <div className="form-group">
                         <label htmlFor="mileage">Mileage</label>
                         <input
@@ -182,9 +233,42 @@ const EditCarModal:React.FC<EditCarModalProps> = ({car,onClose}) => {
                             required
                         />
                     </div>
+
                     </div>
 
                   </div>
+                
+                  <div className="form-group">
+                    <label htmlFor="images">Car Images</label>
+                    <input 
+                      type="file" 
+                      id="images" 
+                      name="images" 
+                      accept="image/*" 
+                      multiple 
+                      onChange={handleImageChange}
+                    />
+                  </div>
+
+                  {imagePreviews.length > 0 && (
+                    <div className="image-preview-container">
+                      <h3>Car Images ({imagePreviews.length})</h3>
+                      <div className="image-preview-grid">
+                        {imagePreviews.map((preview, index) => (
+                          <div key={index} className="image-preview-item">
+                            <img src={preview} alt={`Car image ${index + 1}`} className="image-preview" />
+                            <button 
+                              type="button" 
+                              className="remove-image-button" 
+                              onClick={() => removeImage(index)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 
                     <div className="modal-actions">
                         <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>

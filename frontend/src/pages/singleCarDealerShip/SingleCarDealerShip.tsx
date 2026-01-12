@@ -82,7 +82,7 @@ const SingleCarDealerShip: React.FC = () => {
 
       <div className="single-car-dealer-ship-cars-header">
         
-            <h2><span className='car-title-arrow'><FaArrowLeft size={18} onClick={() => navigate(-1)}/></span> cars ({selectedCarDealerShip?.cars?.length})</h2>
+            <h2><span className='car-title-arrow'><FaArrowLeft size={18} onClick={() => navigate(`/car-dealer-ships`)}/></span> cars ({selectedCarDealerShip?.cars?.length})</h2>
             {user?.id === selectedCarDealerShip?.personId &&(
               <button className="action-btn add-btn" onClick={() => navigate(`/car-dealer-ships/${id}/add-car`)}>Add Car</button>
             )}

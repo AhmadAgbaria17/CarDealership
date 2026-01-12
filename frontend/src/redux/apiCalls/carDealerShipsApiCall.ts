@@ -74,7 +74,7 @@ export function deleteCarDealerShip(id: number){
   }
 }
 
-export function updateCarDealerShip(id: number, dealerShipData: Partial<any>){
+export function updateCarDealerShip(id: number, dealerShipData: Partial<CreateCarDealerShips>){
    return async (dispatch: AppDispatch): Promise<void>=>{
     try{
       const {data} = await request.put(`/car-dealer-ships/${id}`, dealerShipData,
@@ -179,7 +179,7 @@ export function createCar(carData : CreateCar , CarDealerShipId? : string){
   }
 }
 
-export function updateCar(id: number, carData: Partial<any>){
+export function updateCar(id: number, carData: Partial<CreateCar>){
   return async (dispatch: AppDispatch): Promise<void> => {
     try {
       const { data } = await request.put(`/car/${id}`, carData,

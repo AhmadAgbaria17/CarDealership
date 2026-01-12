@@ -47,7 +47,7 @@ namespace dotnetbackend.Controllers
     {
       var username = User.GetUserName();
       var user = await _userManager.FindByNameAsync(username);
-      Console.WriteLine(user);
+      
       if (user == null)
         return Unauthorized("User not found");
 

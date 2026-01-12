@@ -64,6 +64,7 @@ export interface LikedCar {
   company: string | undefined;
   modelName: string | undefined;
   year: number | undefined;
+  carDealerShipId: number | undefined;
 }
 
 

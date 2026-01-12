@@ -26,13 +26,15 @@ namespace dotnetbackend.Repository
         Company = car.Car.Company,
         ModelName = car.Car.ModelName,
         Year = car.Car.Year,
+        CarDealerShipId = car.Car.CarDealerShipId,
+        
       }).ToListAsync();
     }
 
     public async Task<bool> LikeCarAsync(Person person, int carId)
     {
       var alreadyLiked = await _context.LikedCars
-        .AnyAsync(lc => lc.PersonId == person.Id && lc.CarId == carId);
+        .AnyAsync(lc => lc.CarId == carId && lc.PersonId == person.Id);
       if (alreadyLiked)
       {
         return false; // Car already liked
@@ -55,7 +57,7 @@ namespace dotnetbackend.Repository
     public async Task<bool> UnlikeCarAsync(Person person, int carId)
     {
       var likedCar = await  _context.LikedCars
-        .FirstOrDefaultAsync(lc => lc.PersonId == person.Id && lc.CarId == carId);
+        .FirstOrDefaultAsync(lc => lc.CarId == carId && lc.PersonId == person.Id);
       if (likedCar == null)
       {
         return false;

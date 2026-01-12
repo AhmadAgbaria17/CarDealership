@@ -1,6 +1,4 @@
-
-- complete the header liked cars dropdown 
-- edit photos of the car 
+- complete the edit car
 
 
 

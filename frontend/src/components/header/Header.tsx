@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './header.css';
 import { useDispatch, useSelector} from "react-redux";
 import type { AppDispatch, RootState } from '../../redux/stores';
-import { getlikedCars, logoutUser } from '../../redux/apiCalls/authApiCall';
+import { getlikedCars, logoutUser, removeLikedCar } from '../../redux/apiCalls/authApiCall';
 
 
 const Header = () => {
@@ -15,9 +15,11 @@ const Header = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
-  const handleLogout = () => {
-    setIsDropdownOpen(false);
+  const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     dispatch(logoutUser());
+    setIsDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -34,9 +36,16 @@ const Header = () => {
   }, [isDropdownOpen]);
 
   useEffect(() => {
-    dispatch(getlikedCars());
+    if(user){
+      dispatch(getlikedCars());
+    }
   }, [user,dispatch]);
 
+  const handleDeleteClick = (e: React.MouseEvent, carId: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(removeLikedCar(carId));
+  }
 
   return (
     <header className="header">
@@ -63,7 +72,7 @@ const Header = () => {
               {likedCars.length ? (
                 <ul className='liked-cars-list'>
                   {likedCars.map((likedcar, index) => (
-                    <li key={likedcar.id ?? `${likedcar}-${index}`}>{likedcar.company} {likedcar.modelName} {likedcar.year}</li>
+                    <a href={`/car-dealer-ships/${likedcar.carDealerShipId}/${likedcar.id}`}><li  key={likedcar.id ?? `${likedcar}-${index}`}><span className='liked-car-delete-btn' onClick={(e) => handleDeleteClick(e, likedcar.id)}>X</span>{likedcar.company} {likedcar.modelName} {likedcar.year}</li></a>
                   ))}
                 </ul>
               ) : (

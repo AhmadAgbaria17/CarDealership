@@ -13,10 +13,12 @@ RUN dotnet build "dotnetbackend.csproj" -c Release -o /app/build
 
 # Publish the application
 FROM build AS publish
-RUN dotnet publish "dotnetbackend.csproj" -c Release -o /app/publish
+RUN dotnet publish "dotnetbackend.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Use the official ASP.NET Core runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "dotnetbackend.dll"]

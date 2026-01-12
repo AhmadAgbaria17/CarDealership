@@ -51,6 +51,7 @@ const Car: React.FC = () =>{
           company: car?.company,
           modelName: car?.modelName,
           year: car?.year,
+          carDealerShipId: car?.carDealerShipId,
         };
         dispatch(addLikedCar(likedCar));
       }
@@ -73,7 +74,7 @@ const Car: React.FC = () =>{
       
       <div className='car-header'>
         <div className='car-title-container'>
-         <h1 className='car-title'><span className='car-title-arrow'><FaArrowLeft size={20} onClick={() => navigate(-1)} /></span> {car?.company} {car?.modelName} <span className='car-year'>({car?.year})</span></h1>
+         <h1 className='car-title'><span className='car-title-arrow'><FaArrowLeft size={20} onClick={() => navigate(`/car-dealer-ships/${car?.carDealerShipId}`)} /></span> {car?.company} {car?.modelName} <span className='car-year'>({car?.year})</span></h1>
           {user && (
             <span onClick={() => handleToggleLike()} style={{ cursor: "pointer" }}>
              {liked ? (

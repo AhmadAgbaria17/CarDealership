@@ -353,3 +353,4 @@ C:\Users\Ahmed\Desktop\ahmad17\projects\CarDealership\dotnetbackend\obj\Debug\ne
 C:\Users\Ahmed\Desktop\ahmad17\projects\CarDealership\dotnetbackend\obj\Debug\net8.0\ref\dotnetbackend.dll
 C:\Users\Ahmed\Desktop\ahmad17\projects\CarDealership\dotnetbackend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Ahmed\Desktop\ahmad17\projects\CarDealership\dotnetbackend\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Ahmed\Desktop\ahmad17\projects\CarDealership\dotnetbackend\bin\Debug\net8.0\CloudinaryDotNet.dll

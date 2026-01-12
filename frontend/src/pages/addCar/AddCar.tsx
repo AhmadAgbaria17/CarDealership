@@ -28,12 +28,55 @@ const AddCar:React.FC = ()=>{
     horsepower:'',
     type:''
   })
+  const [images, setImages] = useState<string[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+    const invalidFiles = Array.from(files).filter(file => !file.type.startsWith('image/'));
+
+    if (invalidFiles.length > 0) {
+      invalidFiles.forEach(file => {
+        toast.error(`${file.name} is not an image file`);
+      });
+    }
+
+    if (imageFiles.length === 0) return;
+
+    try {
+      const imagePromises = imageFiles.map((file) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64String = reader.result as string;
+            resolve(base64String);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const base64Images = await Promise.all(imagePromises);
+      setImages(prev => [...prev, ...base64Images]);
+      setImagePreviews(prev => [...prev, ...base64Images]);
+    } catch {
+      toast.error('Failed to process images');
+    }
+  }
+
+  const removeImage = (index: number) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
   }
 
   const handleSubmit = async (e: React.FormEvent)=>{
@@ -49,6 +92,7 @@ const AddCar:React.FC = ()=>{
         modelName: formData.modelName,
         year: Number(formData.year),
         color: formData.color,
+        images: images.length > 0 ? images : undefined,
         description: formData.description,
         price: formData.price,
         fuel: formData.fuel,
@@ -61,7 +105,7 @@ const AddCar:React.FC = ()=>{
       await dispatch(createCar(carData, CarDealerShipId));
       navigate(`/car-dealer-ships/${CarDealerShipId}`);
     }catch(error){
-      toast.error("Failed to add car");
+      toast.error(`Failed to add car: ${error}`);
     }finally{
       setLoading(false);
     }
@@ -76,7 +120,7 @@ const AddCar:React.FC = ()=>{
       </div>
       <form className="add-car-form" onSubmit={handleSubmit}>
         <div className='two-groups'>
-            <div>
+          <div>
             <div className="add-car-form-group">
           <label htmlFor="company">Company</label>
           <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} />
@@ -93,6 +137,9 @@ const AddCar:React.FC = ()=>{
           <label htmlFor="color">Color</label>
           <input type="text" id="color" name="color" value={formData.color} onChange={handleChange} />
         </div>
+    
+        </div>
+        <div>
         <div className="add-car-form-group">
           <label htmlFor="description">Description</label>
           <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
@@ -101,8 +148,6 @@ const AddCar:React.FC = ()=>{
           <label htmlFor="price">Price</label>
           <input type="text" id="price" name="price" value={formData.price} onChange={handleChange} />
         </div>
-        </div>
-        <div>
           <div className="add-car-form-group">
           <label htmlFor="fuel">Fuel</label>
           <input type="text" id="fuel" name="fuel" value={formData.fuel} onChange={handleChange} />
@@ -111,6 +156,10 @@ const AddCar:React.FC = ()=>{
           <label htmlFor="transmission">Transmission</label>
           <input type="text" id="transmission" name="transmission" value={formData.transmission} onChange={handleChange} />
         </div>
+      
+        </div>
+        <div>
+
         <div className="add-car-form-group">
           <label htmlFor="mileage">Mileage</label>
           <input type="text" id="mileage" name="mileage" value={formData.mileage} onChange={handleChange} />
@@ -129,6 +178,36 @@ const AddCar:React.FC = ()=>{
         </div>
         </div>
         </div>
+        <div className="add-car-form-group">
+          <label htmlFor="images">Car Images</label>
+          <input 
+            type="file" 
+            id="images" 
+            name="images" 
+            accept="image/*" 
+            multiple 
+            onChange={handleImageChange}
+          />
+        </div>
+        {imagePreviews.length > 0 && (
+          <div className="image-preview-container">
+            <h3>Selected Images ({imagePreviews.length})</h3>
+            <div className="image-preview-grid">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="image-preview-item">
+                  <img src={preview} alt={`Preview ${index + 1}`} className="image-preview" />
+                  <button 
+                    type="button" 
+                    className="remove-image-button" 
+                    onClick={() => removeImage(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         <button type="submit" className="add-car-button" onClick={handleSubmit} disabled={loading}>Add Car</button>
       </form>
       

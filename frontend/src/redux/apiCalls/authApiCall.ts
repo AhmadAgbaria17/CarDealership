@@ -6,8 +6,7 @@ import request from "../../utils/request";
 
 
 
-const usert = localStorage.getItem("user");
-const token = usert ? JSON.parse(usert).token : null;
+
 
 export function registerUser(user:User){
   return async (dispatch : AppDispatch): Promise<void> =>{
@@ -89,7 +88,15 @@ export function logoutUser(){
 
 export function addLikedCar(likedCar: LikedCar){
   return async (dispatch : AppDispatch):Promise<void> =>{
-    try{    
+    try{
+      const usert = localStorage.getItem("user");
+      const token = usert ? JSON.parse(usert).token : null;
+      
+      if (!token) {
+        toast.error("You must be logged in to like a car");
+        return;
+      }
+      
       const response = await request.post(`/likedcars/${likedCar.id}`,null,
         {
           headers: {
@@ -115,7 +122,15 @@ export function addLikedCar(likedCar: LikedCar){
 export function removeLikedCar(carId: number){
   return async (dispatch : AppDispatch):Promise<void> =>{
     try{
-      const response = await request.delete(`/likedCars/${carId}`,
+      const usert = localStorage.getItem("user");
+      const token = usert ? JSON.parse(usert).token : null;
+      
+      if (!token) {
+        toast.error("You must be logged in to unlike a car");
+        return;
+      }
+      
+      const response = await request.delete(`/likedcars/${carId}`,
         {
           headers: {
             "Content-Type": "application/json",
