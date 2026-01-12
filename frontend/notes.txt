@@ -1,6 +1,3 @@
-- complete the edit car
-
-
 
 frontend :
 npm run dev 
