@@ -11,7 +11,6 @@ import request from "../../utils/request";
 export function registerUser(user:User){
   return async (dispatch : AppDispatch): Promise<void> =>{
     try{
-
       const response = await request.post("/person/register", user);
       dispatch(authActions.register(response.data.registerMessage)); 
     } catch (err) {
@@ -67,7 +66,13 @@ export function logoutUser(){
       try{
         const usert = localStorage.getItem("user");
         const token = usert ? JSON.parse(usert).token : null;
-        const response = await request.get(`likedCars`,
+        
+        if (!token) {
+          toast.error("You must be logged in to view liked cars");
+          return;
+        }
+        
+        const response = await request.get(`/likedcars`,
           {
             headers: {
               "Content-Type": "application/json",

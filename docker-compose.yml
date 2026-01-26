@@ -1,6 +1,7 @@
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: car_dealership_db
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=YourStrong@Passw0rd!
@@ -8,31 +9,52 @@ services:
       - "1433:1433"
     volumes:
       - sqlvolume:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd! -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     restart: always
+    networks:
+      - car_dealership_network
 
   backend:
     build:
       context: ./dotnetbackend
       dockerfile: Dockerfile
+    container_name: car_dealership_backend
     ports:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Database=DotNetBackEnd;User Id=sa;Password=YourStrong@Passw0rd!;TrustServerCertificate=True;
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=db;Database=DotNetBackEnd;User Id=sa;Password=YourStrong@Passw0rd!;TrustServerCertificate=True;MultipleActiveResultSets=True;
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     restart: always
+    networks:
+      - car_dealership_network
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api/
+    container_name: car_dealership_frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
     restart: always
+    networks:
+      - car_dealership_network
 
 volumes:
   sqlvolume:
 
+networks:
+  car_dealership_network:
+    driver: bridge

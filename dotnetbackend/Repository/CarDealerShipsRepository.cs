@@ -43,36 +43,51 @@ namespace dotnetbackend.Repository
 
     public async Task<List<CarDealerShips>> GetAllCarDealerShipsAsync(CDHQueryObject queryObject)
     {
-      var CarDealerShip = _context.CarDealerShips.Include(c => c.Cars).Include(a => a.Person).AsQueryable();
-      
-
-      if (!string.IsNullOrEmpty(queryObject.Name))
+      try
       {
-        CarDealerShip = CarDealerShip.Where(c => c.Name.Contains(queryObject.Name));
-      }
-      if (!string.IsNullOrEmpty(queryObject.City))
-      {
-        CarDealerShip = CarDealerShip.Where(c => c.City.Contains(queryObject.City));
-      }
-
-      if (!string.IsNullOrWhiteSpace(queryObject.SortBy))
-      {
-        if (queryObject.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+        // Handle null queryObject
+        if (queryObject == null)
         {
-          CarDealerShip = queryObject.IsDescending
-            ? CarDealerShip.OrderByDescending(c => c.Name)
-            : CarDealerShip.OrderBy(c => c.Name);
+          queryObject = new CDHQueryObject();
         }
-      }
 
-      if (queryObject.PageNumber > 0 && queryObject.PageSize > 0)
+        var CarDealerShip = _context.CarDealerShips.Include(c => c.Cars).Include(a => a.Person).AsQueryable();
+        
+
+        if (!string.IsNullOrEmpty(queryObject.Name))
+        {
+          CarDealerShip = CarDealerShip.Where(c => c.Name.Contains(queryObject.Name));
+        }
+        if (!string.IsNullOrEmpty(queryObject.City))
+        {
+          CarDealerShip = CarDealerShip.Where(c => c.City.Contains(queryObject.City));
+        }
+
+        if (!string.IsNullOrWhiteSpace(queryObject.SortBy))
+        {
+          if (queryObject.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+          {
+            CarDealerShip = queryObject.IsDescending
+              ? CarDealerShip.OrderByDescending(c => c.Name)
+              : CarDealerShip.OrderBy(c => c.Name);
+          }
+        }
+
+        if (queryObject.PageNumber > 0 && queryObject.PageSize > 0)
+        {
+          CarDealerShip = CarDealerShip
+            .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
+            .Take(queryObject.PageSize);  
+        }
+
+        return await CarDealerShip.ToListAsync();
+      }
+      catch (Exception ex)
       {
-        CarDealerShip = CarDealerShip
-          .Skip((queryObject.PageNumber - 1) * queryObject.PageSize)
-          .Take(queryObject.PageSize);  
+        Console.WriteLine($"Error in GetAllCarDealerShipsAsync: {ex.Message}");
+        Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        throw; // Re-throw to be handled by controller
       }
-
-      return await CarDealerShip.ToListAsync();
     }
 
     public async Task<CarDealerShips> GetCarDealerShipByIdAsync(int id)

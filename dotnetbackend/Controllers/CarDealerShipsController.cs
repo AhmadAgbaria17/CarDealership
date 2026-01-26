@@ -24,19 +24,35 @@ namespace dotnetbackend.Controllers
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] CDHQueryObject queryObject)
+    public async Task<IActionResult> GetAll([FromQuery] CDHQueryObject? queryObject)
     {
-      if (!ModelState.IsValid)
+      try
       {
-        return BadRequest(ModelState);
-      }
+        // Handle null queryObject
+        if (queryObject == null)
+        {
+          queryObject = new CDHQueryObject();
+        }
 
-      var carDealerShips = await _carDealerShipService.GetAllAsync(queryObject);
-      if (carDealerShips == null || !carDealerShips.Any())
-      {
-        return NotFound("No car dealer ships found");
+        if (!ModelState.IsValid)
+        {
+          return BadRequest(ModelState);
+        }
+
+        var carDealerShips = await _carDealerShipService.GetAllAsync(queryObject);
+        if (carDealerShips == null || !carDealerShips.Any())
+        {
+          return Ok(new List<CarDealerShipDto>()); // Return empty list instead of NotFound
+        }
+        return Ok(carDealerShips);
       }
-      return Ok(carDealerShips);
+      catch (Exception ex)
+      {
+        // Log the exception (you might want to use ILogger here)
+        Console.WriteLine($"Error in GetAll: {ex.Message}");
+        Console.WriteLine($"Stack trace: {ex.StackTrace}");
+        return StatusCode(500, new { Message = "An error occurred while fetching car dealer ships", Error = ex.Message });
+      }
     }
 
     [HttpGet("{id:int}")]

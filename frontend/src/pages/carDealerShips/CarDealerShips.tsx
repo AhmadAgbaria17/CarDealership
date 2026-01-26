@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCarDealerShips, deleteCarDealerShip } from "../../redux/apiCalls/carDealerShipsApiCall";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/stores";
-import "./CarDealerShips.css";
+import "./carDealerShips.css";
 import CarDealerShipItem from "../../components/carDealerShipItem/CarDealerShipItem";
 import type { CarDealerShip } from "../../interfaces/types";
 import EditCarDealerShipModal from "../../components/modals/EditCarDealerShipModal";

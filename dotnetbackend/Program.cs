@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -114,6 +115,51 @@ builder.Services.AddScoped<ILikedCarRepository, LikedCarRepository>();
 
 
 var app = builder.Build();
+
+// Ensure database is created and migrations are applied
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        
+        // Wait for database to be ready (retry logic)
+        var maxRetries = 10;
+        var retryCount = 0;
+        var migrationApplied = false;
+        
+        while (retryCount < maxRetries && !migrationApplied)
+        {
+            try
+            {
+                logger.LogInformation($"Attempting to connect to database (attempt {retryCount + 1}/{maxRetries})...");
+                context.Database.Migrate(); // This will create the database if it doesn't exist and apply migrations
+                logger.LogInformation("Database migrations applied successfully.");
+                migrationApplied = true;
+            }
+            catch (Exception dbEx)
+            {
+                retryCount++;
+                logger.LogWarning($"Database migration attempt {retryCount}/{maxRetries} failed: {dbEx.Message}");
+                if (retryCount >= maxRetries)
+                {
+                    logger.LogError(dbEx, "Failed to migrate database after multiple retries.");
+                    // Don't throw - let the app start, but log the error
+                    break;
+                }
+                Thread.Sleep(3000); // Wait 3 seconds before retry
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred during database initialization.");
+        // Don't throw - let the app start even if DB migration fails
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

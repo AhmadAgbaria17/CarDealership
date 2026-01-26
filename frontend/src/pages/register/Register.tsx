@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import "../login/Login.css"
+import "../login/login.css"
 import { useEffect , useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
